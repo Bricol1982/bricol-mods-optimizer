@@ -524,12 +524,12 @@ class Review extends React.PureComponent {
     return <div className={'help'}>
       <p>
         HotUtils is another tool for SWGOH that allows you to directly modify your game account. By importing the
-        recommendation from Grandivory's Mods Optimizer, you can instantly rearrange mods in-game and create profiles
+        recommendation from Bricol's Mods Optimizer, you can instantly rearrange mods in-game and create profiles
         that you can switch back-and-forth between quickly.
       </p>
       <p>
         <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
-        Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with
+        Galaxy of Heroes. You assume all risk in using this tool. Bricol's Mods Optimizer is not associated with
         HotUtils.
       </p>
       <p><a href={'https://www.hotutils.com/'} target={'_blank'} rel={'noopener noreferrer'}>
@@ -572,7 +572,7 @@ class Review extends React.PureComponent {
       </p>
       <p>
         <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
-        Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with
+        Galaxy of Heroes. You assume all risk in using this tool. Bricol's Mods Optimizer is not associated with
         HotUtils.
       </p>
       <hr />
@@ -630,7 +630,7 @@ class Review extends React.PureComponent {
         </span>
       </h3>
       <p>
-        This will move all of your mods as recommended by Grandivory's Mods Optimizer.
+        This will move all of your mods as recommended by Bricol's Mods Optimizer.
         Please note that <strong className={'gold'}>
           this action will log you out of Galaxy of Heroes if you are currently logged in
         </strong>.
@@ -641,7 +641,7 @@ class Review extends React.PureComponent {
       </p>
       <p>
         <strong>Use at your own risk!</strong> HotUtils functionality breaks the terms of service for Star Wars:
-        Galaxy of Heroes. You assume all risk in using this tool. Grandivory's Mods Optimizer is not associated with
+        Galaxy of Heroes. You assume all risk in using this tool. Bricol's Mods Optimizer is not associated with
         HotUtils.
       </p>
       <div className={'actions'}>

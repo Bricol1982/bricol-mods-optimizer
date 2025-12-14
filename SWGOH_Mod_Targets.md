@@ -60,7 +60,7 @@ Consultez les fichiers suivants dans `SWGOH_Mod_Targets/` :
 - ✅ 16 stratégies pré-configurées
 - ✅ Application en 1 commande
 - ✅ Historique complet
-- ✅ Compatible GrandIvory, HotUtils, C-3PO
+- ✅ Compatible Bricol, HotUtils, C-3PO
 
 ## 📊 Statistiques
 

@@ -1,4 +1,4 @@
-# Contributing to Grandivory's Mods Optimizer
+# Contributing to Bricol's Mods Optimizer
 
 ## Scope of changes
 No change is too small to be considered a worthwhile contribution! Even if you're only
@@ -29,7 +29,7 @@ This makes changes easy to parse from just reading the commit log.
 
 ## Pull requests
 Once you think that your changes are ready to be merged, open a pull request back to
-the `develop` branch on `grandivory/mods-optimizer`. This will notify me that the
+the `develop` branch on `bricol1982/bricol-mods-optimizer`. This will notify me that the
 changes are ready, and will start the review process. I try to be somewhat relaxed in
 any changes I request, and will often make requested changes myself to make the whole
 contribution process as quick and easy as possible.

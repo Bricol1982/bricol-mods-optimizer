@@ -40,14 +40,18 @@ class ModSquadsView extends PureComponent {
   render() {
     const { squads } = this.props;
     const selectedSquad = squads.find(s => s.id === this.state.selectedSquadId);
+    const filteredSquads = squads.filter(squad => squad.category === this.state.selectedCategory);
 
     return (
       <div className="mod-squads-view">
-        <Sidebar content={[this.squadListSidebar()]} />
+        <Sidebar content={[this.categoryTabsSidebar()]} />
 
         <div className="squads-main-content">
-          {!selectedSquad && this.renderWelcome()}
-          {selectedSquad && this.renderSquadEditor(selectedSquad)}
+          {this.renderSquadsList(filteredSquads)}
+        </div>
+
+        <div className="composition-panel">
+          {selectedSquad && this.renderComposition(selectedSquad)}
         </div>
 
         <div className="available-characters-panel">
@@ -57,15 +61,43 @@ class ModSquadsView extends PureComponent {
     );
   }
 
-  renderWelcome() {
+  renderSquadsList(filteredSquads) {
     return (
-      <div className="welcome-message">
-        <h2>My Mods Sets</h2>
-        <p>Create and manage your squad compositions for 3v3 and 5v5 battles.</p>
-        <p>Select a squad from the left sidebar or create a new one to get started.</p>
-        <button className="btn-primary" onClick={this.handleCreateSquad}>
-          Create New Squad
+      <div className="squads-list-content">
+        <h3>Squads List</h3>
+
+        <button className="btn-create-squad" onClick={this.handleCreateSquad}>
+          + Create New Squad
         </button>
+
+        {filteredSquads.length === 0 && (
+          <div className="empty-message">
+            No squads in this category. Create your first squad to get started!
+          </div>
+        )}
+
+        <div className="squads-grid">
+          {filteredSquads.map(squad => (
+            <SquadCard
+              key={squad.id}
+              squad={squad}
+              isSelected={squad.id === this.state.selectedSquadId}
+              onClick={() => this.setState({ selectedSquadId: squad.id })}
+              onDelete={this.props.deleteSquad}
+              onClone={this.props.cloneSquad}
+              onSendToOptimizer={this.handleSendToOptimizer}
+            />
+          ))}
+        </div>
+      </div>
+    );
+  }
+
+  renderComposition(squad) {
+    return (
+      <div className="composition-content">
+        <h3>Composition</h3>
+        {this.renderSquadEditor(squad)}
       </div>
     );
   }
@@ -203,16 +235,13 @@ class ModSquadsView extends PureComponent {
     );
   }
 
-  squadListSidebar() {
+  categoryTabsSidebar() {
     const { squads, squadCategories } = this.props;
     const { selectedCategory } = this.state;
 
-    // Filter squads by selected category
-    const filteredSquads = squads.filter(squad => squad.category === selectedCategory);
-
     return (
-      <div className="squad-list-sidebar" key="squad-list">
-        <h3>My Squads</h3>
+      <div className="category-sidebar" key="category-sidebar">
+        <h3>Squads Categories</h3>
 
         {/* Category tabs */}
         <div className="category-tabs">
@@ -220,7 +249,7 @@ class ModSquadsView extends PureComponent {
             <button
               key={category}
               className={`category-tab ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => this.setState({ selectedCategory: category })}
+              onClick={() => this.setState({ selectedCategory: category, selectedSquadId: null })}
             >
               {category}
               <span className="category-count">
@@ -245,27 +274,6 @@ class ModSquadsView extends PureComponent {
               </button>
             </>
           )}
-        </div>
-
-        <button className="btn-create-squad" onClick={this.handleCreateSquad}>
-          + Create New Squad
-        </button>
-
-        <div className="squads-list">
-          {filteredSquads.length === 0 && (
-            <div className="empty-message">No squads in this category</div>
-          )}
-          {filteredSquads.map(squad => (
-            <SquadCard
-              key={squad.id}
-              squad={squad}
-              isSelected={squad.id === this.state.selectedSquadId}
-              onClick={() => this.setState({ selectedSquadId: squad.id })}
-              onDelete={this.props.deleteSquad}
-              onClone={this.props.cloneSquad}
-              onSendToOptimizer={this.handleSendToOptimizer}
-            />
-          ))}
         </div>
       </div>
     );

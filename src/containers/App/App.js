@@ -158,7 +158,7 @@ class App extends PureComponent {
     return (
       <header className={"App-header"}>
         <h1 className={"App-title"}>
-          Grandivory's Mods Optimizer{" "}
+          Bricol's Mods Optimizer{" "}
           <span className="subtitle">for Star Wars: Galaxy of Heroes™</span>
         </h1>
         {showActions && (
@@ -169,17 +169,17 @@ class App extends PureComponent {
             >
               Explore my mods
             </button>
+                        <button
+              className={"squads" === this.props.section ? "active" : ""}
+              onClick={() => this.props.changeSection("squads")}
+            >
+              My Mods Sets
+            </button>
             <button
               className={"optimize" === this.props.section ? "active" : ""}
               onClick={() => this.props.changeSection("optimize")}
             >
               Optimize my mods
-            </button>
-            <button
-              className={"squads" === this.props.section ? "active" : ""}
-              onClick={() => this.props.changeSection("squads")}
-            >
-              My Mods sets
             </button>
           </nav>
         )}
@@ -434,7 +434,7 @@ class App extends PureComponent {
     return (
       <div className={"welcome"}>
         <h2>
-          Welcome to Grandivory's Mods Optimizer for Star Wars: Galaxy of
+          Welcome to Bricol's Mods Optimizer for Star Wars: Galaxy of
           Heroes™!
         </h2>
         <p>
@@ -461,7 +461,7 @@ class App extends PureComponent {
     return (
       <div>
         <h2 className={"gold"}>
-          Grandivory's Mods Optimizer has updated to version 1.8!
+          Bricol's Mods Optimizer has updated to version 1.8!
         </h2>
         <h3>Here's a short summary of the changes included in this version:</h3>
         <ul>
@@ -631,7 +631,7 @@ class App extends PureComponent {
         <p>
           <strong>Use at your own risk!</strong> HotUtils functionality breaks
           the terms of service for Star Wars: Galaxy of Heroes. You assume all
-          risk in using this tool. Grandivory's Mods Optimizer is not associated
+          risk in using this tool. Bricol's Mods Optimizer is not associated
           with HotUtils.
         </p>
         <div className={"actions"}>
@@ -766,7 +766,7 @@ class App extends PureComponent {
         <p>
           <strong>Use at your own risk!</strong> HotUtils and C-3PO
           functionality breaks the terms of service for Star Wars: Galaxy of
-          Heroes. You assume all risk in using these tools. Grandivory's Mods
+          Heroes. You assume all risk in using these tools. Bricol's Mods
           Optimizer is not associated with HotUtils or C-3PO.
         </p>
         <div className={"grid-2"}>

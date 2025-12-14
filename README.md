@@ -1,5 +1,5 @@
-# Grandivory's Mods Optimizer
-Grandivory's Mods Optimizer for Star Wars: Galaxy of Heroes is a single-page application built in React.js to help
+# Bricol's Mods Optimizer
+Bricol's Mods Optimizer for Star Wars: Galaxy of Heroes is a single-page application built in React.js to help
 answer of the question of "how can I distribute my mods to get the most out of all of my teams?" It works by applying
 constant weights to every potential stat that a character can get from a mod, and then summing up the value of all stats
 included in a full set of mods. The set that has the highest total value will be the best set to equip. This only works,
