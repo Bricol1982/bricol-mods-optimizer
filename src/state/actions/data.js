@@ -70,10 +70,12 @@ function fetchVersion() {
     });
 }
 
-function processVersion(version) {
-  return function (dispatch, getState) {
-    const state = getState();
+function processVersion(/* version */) {
+  return function (/* dispatch, getState */) {
+    // const state = getState();
 
+    // Commented out version check notification to avoid annoying reload messages
+    /*
     if (state.version !== version) {
       dispatch(
         showFlash("Version out-of-date!", [
@@ -88,6 +90,7 @@ function processVersion(version) {
         ])
       );
     }
+    */
   };
 }
 

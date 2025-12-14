@@ -7,7 +7,6 @@ import Sidebar from '../../components/Sidebar/Sidebar';
 import SquadCard from '../../components/SquadCard/SquadCard';
 import SquadMemberSlot from '../../components/SquadMemberSlot/SquadMemberSlot';
 import CharacterAvatar from '../../components/CharacterAvatar/CharacterAvatar';
-import { GameSettings } from '../../domain/CharacterDataClasses';
 import { Dropdown } from '../../components/Dropdown/Dropdown';
 import { showModal } from '../../state/actions/app';
 import {
@@ -26,7 +25,7 @@ import {
   renameCategory,
   deleteCategory,
 } from '../../state/actions/squads';
-import { changeSection } from '../../state/actions/app';
+import { changeSection, updateProfile } from '../../state/actions/app';
 import characterSettings from '../../constants/characterSettings';
 import OptimizationPlan from '../../domain/OptimizationPlan';
 
@@ -96,7 +95,7 @@ class ModSquadsView extends PureComponent {
   renderComposition(squad) {
     return (
       <div className="composition-content">
-        <h3>Composition</h3>
+        <h3>Squad Composition</h3>
         {this.renderSquadEditor(squad)}
       </div>
     );
@@ -195,8 +194,29 @@ class ModSquadsView extends PureComponent {
         if (alreadyInSquad) return false;
 
         if (filter) {
-          const gameSetting = gameSettings[char.baseID] || new GameSettings(char.baseID, char.baseID);
-          return gameSetting.name.toLowerCase().includes(filter);
+          // Get character name from gameSettings or use baseID as fallback
+          const characterName = gameSettings[char.baseID]?.name || char.baseID;
+
+          // Check character name
+          if (characterName.toLowerCase().includes(filter)) {
+            return true;
+          }
+
+          // Check baseID
+          if (char.baseID.toLowerCase().includes(filter)) {
+            return true;
+          }
+
+          // Check tags (factions) and extra tags (abbreviations)
+          const tags = gameSettings[char.baseID]?.tags || [];
+          const extraTags = characterSettings[char.baseID]?.extraTags || [];
+          const allTags = tags.concat(extraTags);
+
+          if (allTags.some(tag => tag.toLowerCase().includes(filter))) {
+            return true;
+          }
+
+          return false;
         }
         return true;
       })
@@ -275,6 +295,23 @@ class ModSquadsView extends PureComponent {
             </>
           )}
         </div>
+
+        {/* Export/Import buttons */}
+        <div className="export-import-actions">
+          <button className="btn-export" onClick={this.handleExportSquads}>
+            Export Squads
+          </button>
+          <button className="btn-import" onClick={this.handleImportSquads}>
+            Import Squads
+          </button>
+          <input
+            type="file"
+            ref={ref => this.fileInput = ref}
+            style={{ display: 'none' }}
+            accept=".json"
+            onChange={this.handleFileSelect}
+          />
+        </div>
       </div>
     );
   }
@@ -314,6 +351,110 @@ class ModSquadsView extends PureComponent {
       this.props.deleteCategory(this.state.selectedCategory);
       this.setState({ selectedCategory: 'Uncategorized' });
     }
+  };
+
+  handleExportSquads = () => {
+    const { squads, squadCategories } = this.props;
+
+    const exportData = {
+      version: '1.0',
+      exportDate: new Date().toISOString(),
+      squadCategories: squadCategories,
+      squads: squads.map(squad => ({
+        id: squad.id,
+        name: squad.name,
+        type: squad.type,
+        gameMode: squad.gameMode,
+        category: squad.category,
+        members: squad.members,
+        createdDate: squad.createdDate,
+        modifiedDate: squad.modifiedDate
+      }))
+    };
+
+    const dataStr = JSON.stringify(exportData, null, 2);
+    const dataBlob = new Blob([dataStr], { type: 'application/json' });
+    const url = URL.createObjectURL(dataBlob);
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = `squads-backup-${new Date().toISOString().split('T')[0]}.json`;
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  handleImportSquads = () => {
+    if (this.fileInput) {
+      this.fileInput.click();
+    }
+  };
+
+  handleFileSelect = (event) => {
+    const file = event.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      try {
+        const importData = JSON.parse(e.target.result);
+
+        if (!importData.version || !importData.squads || !importData.squadCategories) {
+          alert('Invalid backup file format');
+          return;
+        }
+
+        const confirmMessage = `This will import ${importData.squads.length} squads and ${importData.squadCategories.length} categories. Do you want to:\n\n` +
+          `- Click OK to MERGE with existing squads\n` +
+          `- Click Cancel to abort`;
+
+        if (window.confirm(confirmMessage)) {
+          this.importSquadsData(importData);
+        }
+      } catch (error) {
+        alert('Error reading backup file: ' + error.message);
+      }
+    };
+    reader.readAsText(file);
+    event.target.value = '';
+  };
+
+  importSquadsData = (importData) => {
+    const { squads, squadCategories } = this.props;
+
+    // Merge categories (avoid duplicates)
+    const mergedCategories = [...new Set([...squadCategories, ...importData.squadCategories])];
+
+    // Import squads with new IDs to avoid conflicts
+    const importedSquads = importData.squads.map(squadData => {
+      const ModSquad = require('../../domain/ModSquad').default;
+
+      // Deserialize members with their targets
+      const deserializedMembers = squadData.members.map(member => ({
+        ...member,
+        target: member.target ? OptimizationPlan.deserialize(member.target) : null
+      }));
+
+      return new ModSquad(
+        ModSquad.generateId(), // Generate new ID
+        squadData.name,
+        squadData.type,
+        deserializedMembers,
+        squadData.gameMode,
+        squadData.category,
+        new Date(squadData.createdDate),
+        new Date()
+      );
+    });
+
+    // Update profile with merged data
+    this.props.updateProfile(profile => {
+      return profile
+        .withSquadCategories(mergedCategories)
+        .withSquads([...squads, ...importedSquads]);
+    });
+
+    alert(`Successfully imported ${importedSquads.length} squads and ${importData.squadCategories.length} categories!`);
   };
 
   handleDragStart = (e, character) => {
@@ -407,6 +548,7 @@ const mapDispatchToProps = {
   deleteCategory,
   changeSection,
   showModal,
+  updateProfile,
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(ModSquadsView);

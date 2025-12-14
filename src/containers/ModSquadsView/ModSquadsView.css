@@ -145,6 +145,44 @@
   margin-bottom: 15px;
 }
 
+.export-import-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 20px;
+  padding-top: 15px;
+  border-top: 1px solid #444;
+}
+
+.btn-export,
+.btn-import {
+  width: 100%;
+  background-color: #2a5a2a;
+  border: 1px solid #3a7a3a;
+  border-radius: 4px;
+  padding: 10px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 13px;
+  font-weight: bold;
+  transition: all 0.2s ease;
+}
+
+.btn-export:hover {
+  background-color: #3a7a3a;
+  border-color: #4a9a4a;
+}
+
+.btn-import {
+  background-color: #2a4a5a;
+  border-color: #3a6a7a;
+}
+
+.btn-import:hover {
+  background-color: #3a6a7a;
+  border-color: #4a8a9a;
+}
+
 .btn-small {
   flex: 1;
   background-color: #333;
