@@ -21,6 +21,10 @@ import {
   updateSquadMemberTarget,
   sendSquadToOptimizer,
   cloneSquad,
+  updateSquadCategory,
+  addCategory,
+  renameCategory,
+  deleteCategory,
 } from '../../state/actions/squads';
 import { changeSection } from '../../state/actions/app';
 import characterSettings from '../../constants/characterSettings';
@@ -30,6 +34,7 @@ class ModSquadsView extends PureComponent {
   state = {
     selectedSquadId: null,
     characterFilter: '',
+    selectedCategory: 'Uncategorized',
   };
 
   render() {
@@ -121,6 +126,16 @@ class ModSquadsView extends PureComponent {
               <option value="CONQUEST">CONQUEST</option>
             </Dropdown>
 
+            <label>Category:</label>
+            <Dropdown
+              value={squad.category}
+              onChange={(e) => this.props.updateSquadCategory(squad.id, e.target.value)}
+            >
+              {this.props.squadCategories.map(cat => (
+                <option key={cat} value={cat}>{cat}</option>
+              ))}
+            </Dropdown>
+
             <button
               className="btn-send-optimizer"
               onClick={() => this.handleSendToOptimizer(squad.id)}
@@ -189,20 +204,58 @@ class ModSquadsView extends PureComponent {
   }
 
   squadListSidebar() {
-    const { squads } = this.props;
+    const { squads, squadCategories } = this.props;
+    const { selectedCategory } = this.state;
+
+    // Filter squads by selected category
+    const filteredSquads = squads.filter(squad => squad.category === selectedCategory);
 
     return (
       <div className="squad-list-sidebar" key="squad-list">
         <h3>My Squads</h3>
+
+        {/* Category tabs */}
+        <div className="category-tabs">
+          {squadCategories.map(category => (
+            <button
+              key={category}
+              className={`category-tab ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => this.setState({ selectedCategory: category })}
+            >
+              {category}
+              <span className="category-count">
+                ({squads.filter(s => s.category === category).length})
+              </span>
+            </button>
+          ))}
+        </div>
+
+        {/* Category management buttons */}
+        <div className="category-actions">
+          <button className="btn-small" onClick={this.handleAddCategory}>
+            + Add Category
+          </button>
+          {selectedCategory !== 'Uncategorized' && (
+            <>
+              <button className="btn-small" onClick={this.handleRenameCategory}>
+                Rename
+              </button>
+              <button className="btn-small delete" onClick={this.handleDeleteCategory}>
+                Delete
+              </button>
+            </>
+          )}
+        </div>
+
         <button className="btn-create-squad" onClick={this.handleCreateSquad}>
           + Create New Squad
         </button>
 
         <div className="squads-list">
-          {squads.length === 0 && (
-            <div className="empty-message">No squads created yet</div>
+          {filteredSquads.length === 0 && (
+            <div className="empty-message">No squads in this category</div>
           )}
-          {squads.map(squad => (
+          {filteredSquads.map(squad => (
             <SquadCard
               key={squad.id}
               squad={squad}
@@ -221,7 +274,7 @@ class ModSquadsView extends PureComponent {
   handleCreateSquad = () => {
     const name = prompt('Enter squad name:', `Squad ${this.props.squads.length + 1}`);
     if (name) {
-      this.props.createSquad(name, '5v5', 'GAC');
+      this.props.createSquad(name, '5v5', 'GAC', this.state.selectedCategory);
       // Select the newly created squad
       setTimeout(() => {
         const newSquad = this.props.squads[this.props.squads.length - 1];
@@ -229,6 +282,29 @@ class ModSquadsView extends PureComponent {
           this.setState({ selectedSquadId: newSquad.id });
         }
       }, 100);
+    }
+  };
+
+  handleAddCategory = () => {
+    const categoryName = prompt('Enter category name:');
+    if (categoryName && categoryName.trim()) {
+      this.props.addCategory(categoryName.trim());
+      this.setState({ selectedCategory: categoryName.trim() });
+    }
+  };
+
+  handleRenameCategory = () => {
+    const newName = prompt('Enter new category name:', this.state.selectedCategory);
+    if (newName && newName.trim() && newName.trim() !== this.state.selectedCategory) {
+      this.props.renameCategory(this.state.selectedCategory, newName.trim());
+      this.setState({ selectedCategory: newName.trim() });
+    }
+  };
+
+  handleDeleteCategory = () => {
+    if (window.confirm(`Delete category "${this.state.selectedCategory}"? All squads will be moved to Uncategorized.`)) {
+      this.props.deleteCategory(this.state.selectedCategory);
+      this.setState({ selectedCategory: 'Uncategorized' });
     }
   };
 
@@ -301,6 +377,7 @@ class ModSquadsView extends PureComponent {
 
 const mapStateToProps = (state) => ({
   squads: state.profile.squads || [],
+  squadCategories: state.profile.squadCategories || ['Uncategorized'],
   characters: state.profile.characters,
   gameSettings: state.gameSettings,
 });
@@ -316,6 +393,10 @@ const mapDispatchToProps = {
   updateSquadMemberTarget,
   sendSquadToOptimizer,
   cloneSquad,
+  updateSquadCategory,
+  addCategory,
+  renameCategory,
+  deleteCategory,
   changeSection,
   showModal,
 };

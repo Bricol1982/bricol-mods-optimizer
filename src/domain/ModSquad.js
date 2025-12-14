@@ -12,6 +12,7 @@ export default class ModSquad {
   type;
   members;
   gameMode;
+  category;
   createdDate;
   modifiedDate;
 
@@ -21,6 +22,7 @@ export default class ModSquad {
    * @param type {string} Squad type: '3v3' or '5v5'
    * @param members {Array<{characterID: string, position: number, target: OptimizationPlan}>} Squad members
    * @param gameMode {string} Game mode (GAC, TW, ARENA, TB, etc.)
+   * @param category {string} Category/group name for organization
    * @param createdDate {Date} When the squad was created
    * @param modifiedDate {Date} Last modification date
    */
@@ -30,6 +32,7 @@ export default class ModSquad {
     type = '5v5',
     members = [],
     gameMode = 'GAC',
+    category = 'Uncategorized',
     createdDate = new Date(),
     modifiedDate = new Date()
   ) {
@@ -38,6 +41,7 @@ export default class ModSquad {
     this.type = type;
     this.members = members;
     this.gameMode = gameMode;
+    this.category = category;
     this.createdDate = createdDate;
     this.modifiedDate = modifiedDate;
   }
@@ -54,6 +58,7 @@ export default class ModSquad {
       this.type,
       this.members,
       this.gameMode,
+      this.category,
       this.createdDate,
       new Date()
     );
@@ -71,6 +76,7 @@ export default class ModSquad {
       this.type,
       members,
       this.gameMode,
+      this.category,
       this.createdDate,
       new Date()
     );
@@ -88,6 +94,7 @@ export default class ModSquad {
       type,
       this.members,
       this.gameMode,
+      this.category,
       this.createdDate,
       new Date()
     );
@@ -105,6 +112,25 @@ export default class ModSquad {
       this.type,
       this.members,
       gameMode,
+      this.category,
+      this.createdDate,
+      new Date()
+    );
+  }
+
+  /**
+   * Create a new ModSquad with a different category
+   * @param category {string}
+   * @returns {ModSquad}
+   */
+  withCategory(category) {
+    return new ModSquad(
+      this.id,
+      this.name,
+      this.type,
+      this.members,
+      this.gameMode,
+      category,
       this.createdDate,
       new Date()
     );
@@ -233,6 +259,7 @@ export default class ModSquad {
         target: member.target.serialize()
       })),
       gameMode: this.gameMode,
+      category: this.category,
       createdDate: this.createdDate.toISOString(),
       modifiedDate: this.modifiedDate.toISOString()
     };
@@ -258,6 +285,7 @@ export default class ModSquad {
         target: OptimizationPlan.deserialize(member.target)
       })),
       squadJson.gameMode || 'GAC',
+      squadJson.category || 'Uncategorized',
       new Date(squadJson.createdDate),
       new Date(squadJson.modifiedDate)
     );

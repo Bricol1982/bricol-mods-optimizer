@@ -19,6 +19,7 @@ export default class PlayerProfile {
   hotUtilsSessionId;
   incrementalOptimizeIndex;
   squads;
+  squadCategories;
   // Deprecated
   previousSettings;
 
@@ -33,6 +34,7 @@ export default class PlayerProfile {
    *                                character
    * @param incrementalOptimizeIndex {number} Specify to terminate optimization at a specific character, for incremental optimization
    * @param squads {Array<ModSquad>} An array of saved squads (3v3 or 5v5)
+   * @param squadCategories {Array<string>} An array of category names for organizing squads
    * @param previousSettings {Object} Deprecated - An object that holds the previous values for characters, mods,
    *                                  selectedCharacters, and modChangeThreshold. If none of these have changed, then
    *                                  modAssignments shouldn't change on a reoptimization.
@@ -48,6 +50,7 @@ export default class PlayerProfile {
     hotUtilsSessionId = null,
     incrementalOptimizeIndex = null,
     squads = [],
+    squadCategories = ['Uncategorized'],
   ) {
     this.allyCode = allyCode;
     this.playerName = playerName;
@@ -60,6 +63,7 @@ export default class PlayerProfile {
     this.hotUtilsSessionId = hotUtilsSessionId;
     this.incrementalOptimizeIndex = incrementalOptimizeIndex;
     this.squads = squads;
+    this.squadCategories = squadCategories;
   }
 
   withPlayerName(name) {
@@ -76,6 +80,7 @@ export default class PlayerProfile {
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
         this.squads,
+      this.squadCategories,
       )
     } else {
       return this;
@@ -96,6 +101,7 @@ export default class PlayerProfile {
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
         this.squads,
+      this.squadCategories,
       );
     } else {
       return this;
@@ -115,6 +121,7 @@ export default class PlayerProfile {
       this.hotUtilsSessionId,
       index,
       this.squads,
+      this.squadCategories,
     );
   }
 
@@ -132,6 +139,7 @@ export default class PlayerProfile {
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
         this.squads,
+      this.squadCategories,
       );
     } else {
       return this;
@@ -152,6 +160,7 @@ export default class PlayerProfile {
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
         this.squads,
+      this.squadCategories,
       );
     } else {
       return this;
@@ -172,6 +181,7 @@ export default class PlayerProfile {
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
         this.squads,
+      this.squadCategories,
       );
     } else {
       return this;
@@ -191,6 +201,7 @@ export default class PlayerProfile {
       this.hotUtilsSessionId,
       this.incrementalOptimizeIndex,
       this.squads,
+      this.squadCategories,
     );
   }
 
@@ -208,6 +219,7 @@ export default class PlayerProfile {
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
         this.squads,
+      this.squadCategories,
       );
     } else {
       return this;
@@ -230,6 +242,7 @@ export default class PlayerProfile {
       this.hotUtilsSessionId,
       this.incrementalOptimizeIndex,
       this.squads,
+      this.squadCategories,
     );
   }
 
@@ -246,6 +259,7 @@ export default class PlayerProfile {
       id,
       this.incrementalOptimizeIndex,
       this.squads,
+      this.squadCategories,
     )
   }
 
@@ -262,6 +276,24 @@ export default class PlayerProfile {
       this.hotUtilsSessionId,
       this.incrementalOptimizeIndex,
       squads,
+      this.squadCategories,
+    )
+  }
+
+  withSquadCategories(squadCategories) {
+    return new PlayerProfile(
+      this.allyCode,
+      this.playerName,
+      this.characters,
+      this.mods,
+      this.selectedCharacters,
+      this.modAssignments,
+      this.globalSettings,
+      this.previousSettings,
+      this.hotUtilsSessionId,
+      this.incrementalOptimizeIndex,
+      this.squads,
+      squadCategories,
     )
   }
 
@@ -294,6 +326,7 @@ export default class PlayerProfile {
       hotUtilsSessionId: this.hotUtilsSessionId,
       incrementalOptimizeIndex: this.incrementalOptimizeIndex,
       squads: this.squads.map(squad => squad.serialize()),
+      squadCategories: this.squadCategories,
     };
   }
 
@@ -316,6 +349,7 @@ export default class PlayerProfile {
         profileJson.hotUtilsSessionId || null,
         profileJson.incrementalOptimizeIndex || null,
         profileJson.squads ? profileJson.squads.map(ModSquad.deserialize) : [],
+        profileJson.squadCategories || ['Uncategorized'],
       )
     } else {
       return null;

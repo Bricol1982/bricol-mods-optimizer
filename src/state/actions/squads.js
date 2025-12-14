@@ -8,16 +8,18 @@ import ModSquad from "../../domain/ModSquad";
  * @param name {string} Name of the squad
  * @param type {string} '3v3' or '5v5'
  * @param gameMode {string} Game mode (GAC, TW, etc.)
+ * @param category {string} Category name
  * @returns {Function}
  */
-export function createSquad(name, type = '5v5', gameMode = 'GAC') {
+export function createSquad(name, type = '5v5', gameMode = 'GAC', category = 'Uncategorized') {
   return updateProfile(profile => {
     const newSquad = new ModSquad(
       ModSquad.generateId(),
       name,
       type,
       [],
-      gameMode
+      gameMode,
+      category
     );
 
     return profile.withSquads([...profile.squads, newSquad]);
@@ -178,9 +180,83 @@ export function cloneSquad(squadId) {
       `${squad.name} (Copy)`,
       squad.type,
       squad.members.map(m => ({ ...m })),
-      squad.gameMode
+      squad.gameMode,
+      squad.category
     );
 
     return profile.withSquads([...profile.squads, clonedSquad]);
+  });
+}
+
+/**
+ * Update a squad's category
+ * @param squadId {string} ID of the squad
+ * @param category {string} New category
+ * @returns {Function}
+ */
+export function updateSquadCategory(squadId, category) {
+  return updateProfile(profile => {
+    const newSquads = profile.squads.map(squad =>
+      squad.id === squadId ? squad.withCategory(category) : squad
+    );
+    return profile.withSquads(newSquads);
+  });
+}
+
+/**
+ * Add a new category
+ * @param categoryName {string} Name of the category
+ * @returns {Function}
+ */
+export function addCategory(categoryName) {
+  return updateProfile(profile => {
+    if (!profile.squadCategories.includes(categoryName)) {
+      return profile.withSquadCategories([...profile.squadCategories, categoryName]);
+    }
+    return profile;
+  });
+}
+
+/**
+ * Rename a category
+ * @param oldName {string} Current category name
+ * @param newName {string} New category name
+ * @returns {Function}
+ */
+export function renameCategory(oldName, newName) {
+  return updateProfile(profile => {
+    const newCategories = profile.squadCategories.map(cat =>
+      cat === oldName ? newName : cat
+    );
+
+    const newSquads = profile.squads.map(squad =>
+      squad.category === oldName ? squad.withCategory(newName) : squad
+    );
+
+    return profile
+      .withSquadCategories(newCategories)
+      .withSquads(newSquads);
+  });
+}
+
+/**
+ * Delete a category and move squads to Uncategorized
+ * @param categoryName {string} Category to delete
+ * @returns {Function}
+ */
+export function deleteCategory(categoryName) {
+  return updateProfile(profile => {
+    if (categoryName === 'Uncategorized') {
+      return profile; // Cannot delete Uncategorized
+    }
+
+    const newCategories = profile.squadCategories.filter(cat => cat !== categoryName);
+    const newSquads = profile.squads.map(squad =>
+      squad.category === categoryName ? squad.withCategory('Uncategorized') : squad
+    );
+
+    return profile
+      .withSquadCategories(newCategories)
+      .withSquads(newSquads);
   });
 }
