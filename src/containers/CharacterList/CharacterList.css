@@ -174,7 +174,8 @@
   vertical-align: middle;
   pointer-events: none;
   white-space: nowrap;
-  margin-right: -0.5em;
+  width: 3em;
+  flex-shrink: 0;
 }
 
 .character-block select {
