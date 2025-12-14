@@ -158,6 +158,10 @@
 .character-block .target {
   grid-row: 3;
   grid-column: 2;
+  display: flex;
+  align-items: center;
+  gap: 0.25em;
+  flex-wrap: nowrap;
 }
 
 .character-block label {
@@ -165,6 +169,7 @@
   font-size: 90%;
   vertical-align: middle;
   pointer-events: none;
+  white-space: nowrap;
 }
 
 .character-block select {
@@ -173,8 +178,11 @@
   vertical-align: middle;
   color: rgb(28, 169, 212);
   background-color: rgb(30, 47, 70);
+  flex-shrink: 0;
 }
 
 .character-block button {
   font-size: 1em;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
