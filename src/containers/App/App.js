@@ -5,6 +5,7 @@ import "./boilerplate.css";
 import "./App.css";
 import OptimizerView from "../OptimizerView/OptimizerView";
 import ExploreView from "../ExploreView/ExploreView";
+import ModSquadsView from "../ModSquadsView/ModSquadsView";
 import FileInput from "../../components/FileInput/FileInput";
 import Modal from "../../components/Modal/Modal";
 import Spinner from "../../components/Spinner/Spinner";
@@ -128,6 +129,9 @@ class App extends PureComponent {
           {!instructionsScreen && "optimize" === this.props.section && (
             <OptimizerView />
           )}
+          {!instructionsScreen && "squads" === this.props.section && (
+            <ModSquadsView />
+          )}
           <FlashMessage />
           <ErrorModal />
           <Modal
@@ -170,6 +174,12 @@ class App extends PureComponent {
               onClick={() => this.props.changeSection("optimize")}
             >
               Optimize my mods
+            </button>
+            <button
+              className={"squads" === this.props.section ? "active" : ""}
+              onClick={() => this.props.changeSection("squads")}
+            >
+              My Mods sets
             </button>
           </nav>
         )}

@@ -6,6 +6,7 @@ import Mod from "./Mod";
 import { mapObject } from "../utils/mapObject";
 import OptimizerRun from "./OptimizerRun";
 import OptimizationPlan from "./OptimizationPlan";
+import ModSquad from "./ModSquad";
 
 export default class PlayerProfile {
   allyCode;
@@ -17,6 +18,7 @@ export default class PlayerProfile {
   globalSettings;
   hotUtilsSessionId;
   incrementalOptimizeIndex;
+  squads;
   // Deprecated
   previousSettings;
 
@@ -30,7 +32,7 @@ export default class PlayerProfile {
    * @param globalSettings {Object} An object containing settings that apply in the context of a player, rather than a
    *                                character
    * @param incrementalOptimizeIndex {number} Specify to terminate optimization at a specific character, for incremental optimization
-   *
+   * @param squads {Array<ModSquad>} An array of saved squads (3v3 or 5v5)
    * @param previousSettings {Object} Deprecated - An object that holds the previous values for characters, mods,
    *                                  selectedCharacters, and modChangeThreshold. If none of these have changed, then
    *                                  modAssignments shouldn't change on a reoptimization.
@@ -45,6 +47,7 @@ export default class PlayerProfile {
     previousSettings = {},
     hotUtilsSessionId = null,
     incrementalOptimizeIndex = null,
+    squads = [],
   ) {
     this.allyCode = allyCode;
     this.playerName = playerName;
@@ -56,6 +59,7 @@ export default class PlayerProfile {
     this.previousSettings = previousSettings;
     this.hotUtilsSessionId = hotUtilsSessionId;
     this.incrementalOptimizeIndex = incrementalOptimizeIndex;
+    this.squads = squads;
   }
 
   withPlayerName(name) {
@@ -71,6 +75,7 @@ export default class PlayerProfile {
         this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
+        this.squads,
       )
     } else {
       return this;
@@ -90,6 +95,7 @@ export default class PlayerProfile {
         this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
+        this.squads,
       );
     } else {
       return this;
@@ -107,7 +113,8 @@ export default class PlayerProfile {
       this.globalSettings,
       this.previousSettings,
       this.hotUtilsSessionId,
-      index
+      index,
+      this.squads,
     );
   }
 
@@ -124,6 +131,7 @@ export default class PlayerProfile {
         this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
+        this.squads,
       );
     } else {
       return this;
@@ -143,6 +151,7 @@ export default class PlayerProfile {
         this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
+        this.squads,
       );
     } else {
       return this;
@@ -162,6 +171,7 @@ export default class PlayerProfile {
         this.previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
+        this.squads,
       );
     } else {
       return this;
@@ -180,6 +190,7 @@ export default class PlayerProfile {
       this.previousSettings,
       this.hotUtilsSessionId,
       this.incrementalOptimizeIndex,
+      this.squads,
     );
   }
 
@@ -196,6 +207,7 @@ export default class PlayerProfile {
         previousSettings,
         this.hotUtilsSessionId,
         this.incrementalOptimizeIndex,
+        this.squads,
       );
     } else {
       return this;
@@ -217,6 +229,7 @@ export default class PlayerProfile {
       {},
       this.hotUtilsSessionId,
       this.incrementalOptimizeIndex,
+      this.squads,
     );
   }
 
@@ -232,6 +245,23 @@ export default class PlayerProfile {
       this.previousSettings,
       id,
       this.incrementalOptimizeIndex,
+      this.squads,
+    )
+  }
+
+  withSquads(squads) {
+    return new PlayerProfile(
+      this.allyCode,
+      this.playerName,
+      this.characters,
+      this.mods,
+      this.selectedCharacters,
+      this.modAssignments,
+      this.globalSettings,
+      this.previousSettings,
+      this.hotUtilsSessionId,
+      this.incrementalOptimizeIndex,
+      squads,
     )
   }
 
@@ -263,6 +293,7 @@ export default class PlayerProfile {
       previousSettings: this.previousSettings,
       hotUtilsSessionId: this.hotUtilsSessionId,
       incrementalOptimizeIndex: this.incrementalOptimizeIndex,
+      squads: this.squads.map(squad => squad.serialize()),
     };
   }
 
@@ -284,6 +315,7 @@ export default class PlayerProfile {
         profileJson.previousSettings || {},
         profileJson.hotUtilsSessionId || null,
         profileJson.incrementalOptimizeIndex || null,
+        profileJson.squads ? profileJson.squads.map(ModSquad.deserialize) : [],
       )
     } else {
       return null;
@@ -319,6 +351,7 @@ export default class PlayerProfile {
       profileJson.previousSettings || {},
       null,
       null,
+      [],
     );
   }
 }

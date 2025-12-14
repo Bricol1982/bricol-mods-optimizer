@@ -1,0 +1,261 @@
+.mod-squads-view {
+  display: grid;
+  grid-template-columns: 300px 1fr 350px;
+  height: 100%;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.squads-main-content {
+  display: flex;
+  flex-direction: column;
+  overflow-y: auto;
+  padding: 20px;
+  background-color: #0a0a0a;
+}
+
+.welcome-message {
+  text-align: center;
+  padding: 60px 20px;
+  color: #fff;
+}
+
+.welcome-message h2 {
+  font-size: 32px;
+  margin-bottom: 20px;
+  color: #4a9eff;
+}
+
+.welcome-message p {
+  font-size: 16px;
+  margin-bottom: 15px;
+  color: #aaa;
+}
+
+.btn-primary {
+  background-color: #4a9eff;
+  color: white;
+  border: none;
+  border-radius: 6px;
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  margin-top: 20px;
+  transition: all 0.2s ease;
+}
+
+.btn-primary:hover {
+  background-color: #6ab7ff;
+  transform: translateY(-2px);
+}
+
+.squad-list-sidebar {
+  padding: 15px;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.squad-list-sidebar h3 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 20px;
+}
+
+.btn-create-squad {
+  width: 100%;
+  background-color: #2a2a2a;
+  border: 2px dashed #555;
+  border-radius: 6px;
+  padding: 12px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 14px;
+  margin-bottom: 20px;
+  transition: all 0.2s ease;
+}
+
+.btn-create-squad:hover {
+  border-color: #888;
+  background-color: #333;
+}
+
+.squads-list {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.empty-message {
+  text-align: center;
+  color: #666;
+  padding: 20px;
+  font-style: italic;
+}
+
+.squad-editor {
+  width: 100%;
+}
+
+.squad-editor-header {
+  background-color: #1a1a1a;
+  padding: 20px;
+  border-radius: 8px;
+  margin-bottom: 20px;
+  border: 1px solid #333;
+}
+
+.squad-name-input {
+  width: 100%;
+  background-color: #2a2a2a;
+  border: 2px solid #444;
+  border-radius: 6px;
+  padding: 12px;
+  font-size: 20px;
+  font-weight: bold;
+  color: #fff;
+  margin-bottom: 15px;
+}
+
+.squad-name-input:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.squad-controls {
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.squad-controls label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.squad-controls select {
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 8px 12px;
+  color: #fff;
+  font-size: 14px;
+}
+
+.btn-send-optimizer {
+  margin-left: auto;
+  background-color: #4caf50;
+  border: none;
+  border-radius: 6px;
+  padding: 10px 20px;
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.btn-send-optimizer:hover:not(:disabled) {
+  background-color: #66bb6a;
+}
+
+.btn-send-optimizer:disabled {
+  background-color: #333;
+  color: #666;
+  cursor: not-allowed;
+}
+
+.squad-members-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 15px;
+  padding: 20px;
+  background-color: #1a1a1a;
+  border-radius: 8px;
+  border: 1px solid #333;
+}
+
+.available-characters-panel {
+  background-color: #0a0a0a;
+  border-left: 1px solid #333;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.available-characters h3 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.character-search {
+  width: 100%;
+  background-color: #2a2a2a;
+  border: 1px solid #555;
+  border-radius: 4px;
+  padding: 10px;
+  color: #fff;
+  font-size: 14px;
+  margin-bottom: 15px;
+}
+
+.character-search:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
+
+.characters-list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+  gap: 10px;
+}
+
+.character-tile {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 6px;
+  padding: 10px;
+  text-align: center;
+  cursor: grab;
+  transition: all 0.2s ease;
+}
+
+.character-tile:hover {
+  border-color: #4a9eff;
+  background-color: #222;
+}
+
+.character-tile:active {
+  cursor: grabbing;
+}
+
+.character-tile[draggable="false"] {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+.character-tile-name {
+  font-size: 11px;
+  color: #aaa;
+  margin-top: 8px;
+  word-break: break-word;
+}
+
+@media (max-width: 1400px) {
+  .mod-squads-view {
+    grid-template-columns: 250px 1fr 300px;
+  }
+}
+
+@media (max-width: 1024px) {
+  .mod-squads-view {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto 1fr auto;
+  }
+
+  .available-characters-panel {
+    border-left: none;
+    border-top: 1px solid #333;
+  }
+}

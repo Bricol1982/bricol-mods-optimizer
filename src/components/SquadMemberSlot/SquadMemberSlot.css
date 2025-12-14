@@ -1,0 +1,100 @@
+.squad-member-slot {
+  position: relative;
+  border: 2px solid #333;
+  border-radius: 8px;
+  padding: 10px;
+  margin: 5px;
+  min-width: 180px;
+  min-height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #1a1a1a;
+  transition: all 0.2s ease;
+}
+
+.squad-member-slot.empty {
+  border-style: dashed;
+  border-color: #555;
+  cursor: pointer;
+}
+
+.squad-member-slot.empty:hover {
+  border-color: #888;
+  background-color: #222;
+}
+
+.squad-member-slot.filled {
+  border-color: #4a9eff;
+}
+
+.empty-slot-icon {
+  font-size: 48px;
+  color: #555;
+  margin-bottom: 10px;
+}
+
+.empty-slot-text {
+  color: #888;
+  font-size: 12px;
+  text-align: center;
+}
+
+.remove-button {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  width: 24px;
+  height: 24px;
+  background-color: #c00;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  font-size: 20px;
+  font-weight: bold;
+  line-height: 1;
+  z-index: 10;
+}
+
+.remove-button:hover {
+  background-color: #f00;
+}
+
+.character-name {
+  margin-top: 10px;
+  text-align: center;
+  font-weight: bold;
+  color: #fff;
+  font-size: 14px;
+}
+
+.target-selector {
+  margin-top: 10px;
+  width: 100%;
+}
+
+.target-selector label {
+  display: block;
+  font-size: 12px;
+  color: #aaa;
+  margin-bottom: 5px;
+}
+
+.target-selector select {
+  width: 100%;
+  padding: 5px;
+  border-radius: 4px;
+  border: 1px solid #555;
+  background-color: #2a2a2a;
+  color: #fff;
+  font-size: 12px;
+}
+
+.target-selector select:focus {
+  outline: none;
+  border-color: #4a9eff;
+}
