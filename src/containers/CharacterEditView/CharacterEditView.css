@@ -98,6 +98,20 @@
   margin-bottom: 0;
 }
 
+.character-edit .selected-characters h4 .character-list-actions {
+  display: flex;
+  flex-wrap: nowrap;
+  gap: 0.25em;
+  align-items: center;
+  justify-content: center;
+  margin-top: 0.5em;
+}
+
+.character-edit .selected-characters h4 .character-list-actions button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
 .character-edit .selected-characters h5 {
   margin: .25em 0 0;
 }
