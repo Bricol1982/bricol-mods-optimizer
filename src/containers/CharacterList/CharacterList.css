@@ -42,6 +42,7 @@
   display: flex;
   flex-wrap: nowrap;
   gap: 0.2em;
+  padding: 0.3em 0;
 }
 
 .character-block .character-icons .icon {
