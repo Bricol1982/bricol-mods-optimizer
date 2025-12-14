@@ -172,51 +172,55 @@ class CharacterEditView extends PureComponent {
           <h4>
             Selected Characters
             <div className="character-list-actions">
-              <button
-                className={"small"}
-                onClick={this.props.clearSelectedCharacters}
-              >
-                Clear
-              </button>
-              <button
-                className={"small"}
-                onClick={this.props.lockSelectedCharacters}
-              >
-                Lock All
-              </button>
-              <button
-                className={"small"}
-                onClick={this.props.unlockSelectedCharacters}
-              >
-                Unlock All
-              </button>
-              <button
-                className={"small"}
-                onClick={() => this.props.showModal(
-                  "full-sets-modal",
-                  this.fullSetsModal()
-                )}
-                disabled={!this.props.selectedCharacters.length}
-              >
-                Full Sets
-              </button>
-              <button
-                className={"small"}
-                onClick={this.props.toggleCharacterEditSortView}
-              >
-                {this.props.sortView ? "Normal" : "Expand"} View
-              </button>
-              <button
-                className={"small"}
-                onClick={() =>
-                  this.props.showModal(
-                    "generate-character-list",
-                    this.generateCharacterListModal()
-                  )
-                }
-              >
-                Auto-generate List
-              </button>
+              <div className="action-row">
+                <button
+                  className={"small"}
+                  onClick={this.props.clearSelectedCharacters}
+                >
+                  Clear
+                </button>
+                <button
+                  className={"small"}
+                  onClick={this.props.lockSelectedCharacters}
+                >
+                  Lock All
+                </button>
+                <button
+                  className={"small"}
+                  onClick={this.props.unlockSelectedCharacters}
+                >
+                  Unlock All
+                </button>
+                <button
+                  className={"small"}
+                  onClick={() => this.props.showModal(
+                    "full-sets-modal",
+                    this.fullSetsModal()
+                  )}
+                  disabled={!this.props.selectedCharacters.length}
+                >
+                  Full Sets
+                </button>
+              </div>
+              <div className="action-row">
+                <button
+                  className={"small"}
+                  onClick={this.props.toggleCharacterEditSortView}
+                >
+                  {this.props.sortView ? "Normal" : "Expand"} View
+                </button>
+                <button
+                  className={"small"}
+                  onClick={() =>
+                    this.props.showModal(
+                      "generate-character-list",
+                      this.generateCharacterListModal()
+                    )
+                  }
+                >
+                  Auto-generate List
+                </button>
+              </div>
             </div>
           </h4>
           <h5>

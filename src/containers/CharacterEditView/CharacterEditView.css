@@ -100,14 +100,20 @@
 
 .character-edit .selected-characters h4 .character-list-actions {
   display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-top: 0.5em;
+}
+
+.character-edit .selected-characters h4 .character-list-actions .action-row {
+  display: flex;
   flex-wrap: nowrap;
   gap: 0.25em;
   align-items: center;
   justify-content: center;
-  margin-top: 0.5em;
 }
 
-.character-edit .selected-characters h4 .character-list-actions button {
+.character-edit .selected-characters h4 .character-list-actions .action-row button {
   flex-shrink: 0;
   white-space: nowrap;
 }
