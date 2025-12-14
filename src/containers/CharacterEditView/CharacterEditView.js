@@ -35,6 +35,8 @@ import {
   updateOmicronBoostsConquest,
   applyTemplateTargets,
   setOptimizeIndex,
+  enableFullSetsForSelected,
+  disableFullSetsForSelected,
 } from "../../state/actions/characterEdit";
 import {
   changeOptimizerView,
@@ -187,6 +189,16 @@ class CharacterEditView extends PureComponent {
                 onClick={this.props.unlockSelectedCharacters}
               >
                 Unlock All
+              </button>
+              <button
+                className={"small"}
+                onClick={() => this.props.showModal(
+                  "full-sets-modal",
+                  this.fullSetsModal()
+                )}
+                disabled={!this.props.selectedCharacters.length}
+              >
+                Full Sets
               </button>
               <button
                 className={"small"}
@@ -893,6 +905,46 @@ class CharacterEditView extends PureComponent {
     );
   }
 
+  /**
+   * Renders a modal to enable or disable "Don't break mod sets" for all selected characters
+   *
+   * @return JSX Element
+   */
+  fullSetsModal() {
+    return (
+      <div>
+        <h2>Set "Don't break mod sets" for all selected characters</h2>
+        <p>
+          This will enable or disable the "Don't break mod sets" option for all
+          currently selected characters.
+        </p>
+        <div className={"actions"}>
+          <button type={"button"} onClick={() => this.props.hideModal()}>
+            Cancel
+          </button>
+          <button
+            type={"button"}
+            onClick={() => {
+              this.props.enableFullSetsForSelected();
+              this.props.hideModal();
+            }}
+          >
+            Enable Full Sets
+          </button>
+          <button
+            type={"button"}
+            onClick={() => {
+              this.props.disableFullSetsForSelected();
+              this.props.hideModal();
+            }}
+          >
+            Disable Full Sets
+          </button>
+        </div>
+      </div>
+    );
+  }
+
   saveTemplateModal() {
     const isNameUnique = (name) =>
       !this.props.characterTemplates.includes(name);
@@ -1438,6 +1490,8 @@ const mapDispatchToProps = (dispatch) => ({
   clearSelectedCharacters: () => dispatch(unselectAllCharacters()),
   lockSelectedCharacters: () => dispatch(lockSelectedCharacters()),
   unlockSelectedCharacters: () => dispatch(unlockSelectedCharacters()),
+  enableFullSetsForSelected: () => dispatch(enableFullSetsForSelected()),
+  disableFullSetsForSelected: () => dispatch(disableFullSetsForSelected()),
   lockAllCharacters: () => dispatch(lockAllCharacters()),
   unlockAllCharacters: () => dispatch(unlockAllCharacters()),
   toggleCharacterLock: (characterID) =>

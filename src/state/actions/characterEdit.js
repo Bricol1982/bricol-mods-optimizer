@@ -141,6 +141,36 @@ export function unlockSelectedCharacters() {
   });
 }
 
+/**
+ * Action to enable "Don't break mod sets" for all selected characters
+ * @returns {Function}
+ */
+export function enableFullSetsForSelected() {
+  return updateProfile(profile => {
+    const newSelectedCharacters = profile.selectedCharacters.map(({ id, target }) => ({
+      id: id,
+      target: target.withUseOnlyFullSets(true)
+    }));
+
+    return profile.withSelectedCharacters(newSelectedCharacters);
+  });
+}
+
+/**
+ * Action to disable "Don't break mod sets" for all selected characters
+ * @returns {Function}
+ */
+export function disableFullSetsForSelected() {
+  return updateProfile(profile => {
+    const newSelectedCharacters = profile.selectedCharacters.map(({ id, target }) => ({
+      id: id,
+      target: target.withUseOnlyFullSets(false)
+    }));
+
+    return profile.withSelectedCharacters(newSelectedCharacters);
+  });
+}
+
 export function lockAllCharacters() {
   return updateProfile(profile =>
     profile.withCharacters(mapObject(profile.characters, character =>
