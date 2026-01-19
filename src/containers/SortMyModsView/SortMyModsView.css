@@ -1,0 +1,451 @@
+/* Sort My Mods View Styles */
+
+.sort-my-mods-view {
+  padding: 20px;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  box-sizing: border-box;
+  flex: 1;
+  overflow-y: auto;
+}
+
+.sort-my-mods-view h2 {
+  color: #fff;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+/* Statistics Summary */
+.mod-stats-summary {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+}
+
+.mod-stats-summary h3 {
+  color: #fff;
+  margin-bottom: 15px;
+  font-size: 18px;
+}
+
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+  gap: 10px;
+}
+
+.stat-item {
+  display: flex;
+  justify-content: space-between;
+  padding: 8px 12px;
+  background-color: #2a2a2a;
+  border-radius: 4px;
+  border-left: 3px solid #4a9eff;
+}
+
+.stat-item.epic {
+  border-left-color: #ff9500;
+}
+
+.stat-item.very-good {
+  border-left-color: #a335ee;
+}
+
+.stat-item.standard {
+  border-left-color: #0070dd;
+}
+
+.stat-item.trash {
+  border-left-color: #9d9d9d;
+}
+
+.stat-item.marked {
+  border-left-color: #ff4444;
+}
+
+.stat-label {
+  color: #aaa;
+  font-size: 14px;
+}
+
+.stat-value {
+  color: #fff;
+  font-weight: bold;
+  font-size: 16px;
+}
+
+/* Filters Bar */
+.mod-filters {
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 15px;
+  align-items: center;
+}
+
+.filter-group {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.filter-group label {
+  color: #aaa;
+  font-size: 14px;
+  white-space: nowrap;
+}
+
+.filter-group select {
+  padding: 6px 10px;
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.filter-group select:hover {
+  border-color: #666;
+}
+
+.filter-actions {
+  margin-left: auto;
+  display: flex;
+  gap: 10px;
+}
+
+.filter-actions button {
+  padding: 8px 16px;
+  background-color: #2a2a2a;
+  color: #fff;
+  border: 1px solid #444;
+  border-radius: 4px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-actions button:hover:not(:disabled) {
+  background-color: #3a3a3a;
+  border-color: #666;
+}
+
+.filter-actions button.active {
+  background-color: #4a9eff;
+  border-color: #4a9eff;
+}
+
+.filter-actions button:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+
+/* Content Wrapper with Two Columns */
+.mods-content-wrapper {
+  display: flex;
+  gap: 20px;
+  align-items: flex-start;
+  width: 100%;
+}
+
+/* Mods Table */
+.mods-table-container {
+  flex: 1;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  overflow-x: auto;
+}
+
+.mods-table {
+  width: 100%;
+  border-collapse: collapse;
+  color: #fff;
+}
+
+.mods-table thead {
+  background-color: #2a2a2a;
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+
+.mods-table th {
+  padding: 12px 15px;
+  text-align: left;
+  font-weight: 600;
+  color: #fff;
+  border-bottom: 2px solid #444;
+  white-space: nowrap;
+}
+
+.mods-table th.sortable {
+  cursor: pointer;
+  user-select: none;
+  transition: background-color 0.2s ease;
+}
+
+.mods-table th.sortable:hover {
+  background-color: #3a3a3a;
+}
+
+.mods-table td {
+  padding: 10px 15px;
+  border-bottom: 1px solid #2a2a2a;
+}
+
+.mods-table tbody tr {
+  transition: background-color 0.2s ease;
+}
+
+.mods-table tbody tr:hover {
+  background-color: #2a2a2a;
+}
+
+.mods-table tbody tr.marked-for-deletion {
+  background-color: rgba(255, 68, 68, 0.1);
+}
+
+.mods-table tbody tr.marked-for-deletion:hover {
+  background-color: rgba(255, 68, 68, 0.2);
+}
+
+.mods-table tbody tr {
+  cursor: pointer;
+}
+
+.mods-table tbody tr.selected-mod {
+  background-color: rgba(74, 158, 255, 0.2);
+  border-left: 3px solid #4a9eff;
+}
+
+.mods-table tbody tr.selected-mod:hover {
+  background-color: rgba(74, 158, 255, 0.3);
+}
+
+/* Table Cells */
+.checkbox-cell {
+  text-align: center;
+  width: 60px;
+}
+
+.checkbox-cell input[type="checkbox"] {
+  cursor: pointer;
+  width: 18px;
+  height: 18px;
+}
+
+.slot-cell {
+  width: 80px;
+  padding: 5px 10px !important;
+}
+
+.mod-icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 50px;
+}
+
+.mod-table-icon {
+  transform: scale(0.7);
+  font-size: 10px;
+}
+
+.set-cell {
+  font-weight: 500;
+  text-transform: capitalize;
+}
+
+.main-stat-cell {
+  font-size: 13px;
+  color: #ddd;
+}
+
+.speed-cell {
+  text-align: center;
+  font-size: 16px;
+  color: #4a9eff;
+  font-weight: bold;
+}
+
+.equipped-cell {
+  text-align: center;
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.level-cell,
+.pips-cell {
+  text-align: center;
+  color: #aaa;
+}
+
+.score-cell {
+  text-align: center;
+  font-weight: bold;
+  font-size: 16px;
+  color: #4a9eff;
+}
+
+.category-cell {
+  text-align: center;
+}
+
+.category-badge {
+  display: inline-block;
+  padding: 4px 12px;
+  border-radius: 12px;
+  font-size: 12px;
+  font-weight: bold;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+/* No Mods Message */
+.no-mods {
+  text-align: center;
+  padding: 40px 20px !important;
+  color: #666;
+  font-style: italic;
+  font-size: 16px;
+}
+
+/* Table Footer */
+.table-footer {
+  background-color: #1a1a1a;
+  border-top: 1px solid #333;
+  padding: 10px 15px;
+  color: #aaa;
+  font-size: 14px;
+  text-align: right;
+}
+
+/* Mod Detail Panel */
+.mod-detail-panel {
+  width: 467px;
+  min-width: 467px;
+  background-color: #1a1a1a;
+  border: 1px solid #333;
+  border-radius: 8px;
+  position: sticky;
+  top: 20px;
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.mod-detail-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 15px;
+  border-bottom: 1px solid #333;
+  background-color: #2a2a2a;
+  border-radius: 8px 8px 0 0;
+}
+
+.mod-detail-header h3 {
+  color: #fff;
+  margin: 0;
+  font-size: 18px;
+}
+
+.close-detail-btn {
+  background: none;
+  border: none;
+  color: #aaa;
+  font-size: 24px;
+  cursor: pointer;
+  padding: 0;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 4px;
+  transition: all 0.2s ease;
+}
+
+.close-detail-btn:hover {
+  background-color: #3a3a3a;
+  color: #fff;
+}
+
+.mod-detail-content {
+  padding: 20px;
+}
+
+/* Responsive Design */
+@media (max-width: 1400px) {
+  .mods-content-wrapper {
+    flex-direction: column;
+  }
+
+  .mod-detail-panel {
+    width: 100%;
+    min-width: 100%;
+    position: static;
+    max-height: none;
+  }
+}
+
+@media (max-width: 1200px) {
+  .stats-grid {
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  }
+
+  .filter-group label {
+    font-size: 12px;
+  }
+
+  .filter-group select {
+    font-size: 12px;
+  }
+
+  .mod-detail-panel {
+    width: 100%;
+    min-width: 100%;
+  }
+}
+
+@media (max-width: 768px) {
+  .sort-my-mods-view {
+    padding: 10px;
+  }
+
+  .mod-filters {
+    flex-direction: column;
+    align-items: stretch;
+  }
+
+  .filter-actions {
+    margin-left: 0;
+    flex-direction: column;
+  }
+
+  .mods-table th,
+  .mods-table td {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .stats-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .mod-icon-wrapper {
+    height: 40px;
+  }
+
+  .mod-table-icon {
+    transform: scale(0.5);
+  }
+}

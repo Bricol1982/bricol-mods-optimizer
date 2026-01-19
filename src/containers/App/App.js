@@ -5,6 +5,7 @@ import "./boilerplate.css";
 import "./App.css";
 import OptimizerView from "../OptimizerView/OptimizerView";
 import ExploreView from "../ExploreView/ExploreView";
+import SortMyModsView from "../SortMyModsView/SortMyModsView";
 import ModSquadsView from "../ModSquadsView/ModSquadsView";
 import FileInput from "../../components/FileInput/FileInput";
 import Modal from "../../components/Modal/Modal";
@@ -126,6 +127,9 @@ class App extends PureComponent {
           {!instructionsScreen && "explore" === this.props.section && (
             <ExploreView />
           )}
+          {!instructionsScreen && "sort" === this.props.section && (
+            <SortMyModsView />
+          )}
           {!instructionsScreen && "optimize" === this.props.section && (
             <OptimizerView />
           )}
@@ -169,7 +173,13 @@ class App extends PureComponent {
             >
               Explore my mods
             </button>
-                        <button
+            <button
+              className={"sort" === this.props.section ? "active" : ""}
+              onClick={() => this.props.changeSection("sort")}
+            >
+              Sort my mods
+            </button>
+            <button
               className={"squads" === this.props.section ? "active" : ""}
               onClick={() => this.props.changeSection("squads")}
             >

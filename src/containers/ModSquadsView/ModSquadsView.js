@@ -263,20 +263,21 @@ class ModSquadsView extends PureComponent {
       <div className="category-sidebar" key="category-sidebar">
         <h3>Squads Categories</h3>
 
-        {/* Category tabs */}
-        <div className="category-tabs">
-          {squadCategories.map(category => (
-            <button
-              key={category}
-              className={`category-tab ${selectedCategory === category ? 'active' : ''}`}
-              onClick={() => this.setState({ selectedCategory: category, selectedSquadId: null })}
-            >
-              {category}
-              <span className="category-count">
-                ({squads.filter(s => s.category === category).length})
-              </span>
-            </button>
-          ))}
+        {/* Export/Import buttons */}
+        <div className="export-import-actions">
+          <button className="btn-export" onClick={this.handleExportSquads}>
+            Export Squads
+          </button>
+          <button className="btn-import" onClick={this.handleImportSquads}>
+            Import Squads
+          </button>
+          <input
+            type="file"
+            ref={ref => this.fileInput = ref}
+            style={{ display: 'none' }}
+            accept=".json"
+            onChange={this.handleFileSelect}
+          />
         </div>
 
         {/* Category management buttons */}
@@ -296,21 +297,20 @@ class ModSquadsView extends PureComponent {
           )}
         </div>
 
-        {/* Export/Import buttons */}
-        <div className="export-import-actions">
-          <button className="btn-export" onClick={this.handleExportSquads}>
-            Export Squads
-          </button>
-          <button className="btn-import" onClick={this.handleImportSquads}>
-            Import Squads
-          </button>
-          <input
-            type="file"
-            ref={ref => this.fileInput = ref}
-            style={{ display: 'none' }}
-            accept=".json"
-            onChange={this.handleFileSelect}
-          />
+        {/* Category tabs */}
+        <div className="category-tabs">
+          {squadCategories.map(category => (
+            <button
+              key={category}
+              className={`category-tab ${selectedCategory === category ? 'active' : ''}`}
+              onClick={() => this.setState({ selectedCategory: category, selectedSquadId: null })}
+            >
+              {category}
+              <span className="category-count">
+                ({squads.filter(s => s.category === category).length})
+              </span>
+            </button>
+          ))}
         </div>
       </div>
     );
